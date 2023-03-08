@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.img-box {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid wheat;
+
+    overflow: hidden;
+}
+
+.poster-img {
+    width: 100%;
+} 

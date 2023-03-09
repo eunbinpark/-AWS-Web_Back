@@ -1,0 +1,15 @@
+main article section label { /* sectoin 밑에 모든 label */
+    color: skyblue;
+}
+
+main article section > input { /* section 바로 밑에 있는 input */
+    border: 3px solid pink;
+}
+
+main article section h1 + label {
+    color: burlywood;
+}
+
+main article div h2 ~ label {
+    color: plum;
+}

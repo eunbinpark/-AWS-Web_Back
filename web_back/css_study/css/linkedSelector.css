@@ -12,4 +12,4 @@ main article section h1 + label {
 
 main article div h2 ~ label {
     color: plum;
-}
+} 

@@ -6,7 +6,7 @@
     margin: 0px auto;
     width: 1200px;
     height: 1000px;
-    background-color: #dbdbdb;
+    background-color: #dbdbdb;    
 }
 
 .box {
@@ -26,11 +26,9 @@
     margin-bottom: 50px;
     background-color: red;
 }
-
 .b2 {
     background-color: blue;
 }
-
 .b3 {
     background-color: black;
 }

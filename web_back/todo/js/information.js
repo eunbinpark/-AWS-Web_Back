@@ -7,6 +7,8 @@ class InformationEvent {
         return this.#instance;
     }
 
+    userInfo = {};
+
     addEventPhotoChangeClick() {
         const infoPhoto = document.querySelector(".info-photo");
         infoPhoto.onclick = () => {
@@ -44,9 +46,14 @@ class InformationEvent {
             aboutMeSaveButton.classList.add("button-hidden");
 
             const infoInputContainers = document.querySelectorAll(".info-input-container");
+            const userInfo = InformationService.getInstance().userInfo;
+            
             infoInputContainers.forEach(infoInputContainer => {
-                infoInputContainer.querySelector(".info-input").disabled = true;
+                const infoInput = infoInputContainer.querySelector(".info-input");
+                userInfo[infoInput.id] = infoInput.value;
+                infoInput.disabled = true;
             });
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
         }
     }
 
@@ -71,7 +78,46 @@ class InformationEvent {
 
             const introduceInput = document.querySelector(".introduce-input");
             introduceInput.disabled = true;
+
+            const userInfo = InformationService.getInstance().userInfo;
+            userInfo["introduce"] = introduceInput.value;
+
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
         }
+    }
+}
+
+class InformationService {
+    static #instance = null;
+    static getInstance() {
+        if(this.#instance == null) {
+            this.#instance = new InformationService();
+        }
+        return this.#instance;
+    }
+
+    loadInfo() {
+        this.loadInfoPhoto(); 
+    }
+
+    loadInfoPhoto() {
+        const infoPhotoImg = document.querySelector(".info-photo img")
+        const infoPhoto = localStorage.getItem("infoPhoto");
+        if(localStorage.getItem("infoPhoto") == null) {
+            infoPhotoImg.src = "./images/noimage.jpg";
+        } else {
+            infoPhotoImg.src = infoPhoto;
+        }
+    }
+
+    loadInfoUser() {
+        this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        if(this.userInfo == null) {
+            return;
+        }
+        Object.keys(this.userInfo).forEach(key => {
+            
+        })
     }
 }
 
@@ -88,6 +134,11 @@ class FileService {
         const photoForm = document.querySelector(".photo-form");
         const formData = new FormData(photoForm);
         const fileValue = formData.get("file");
+        let changeFlag = true;
+
+        if(fileValue.size == 0) {
+            return;
+        }
         this.showPreview(fileValue)
     }
 
@@ -99,6 +150,7 @@ class FileService {
         fileReader.onload = (e) => {
             const photoImg = document.querySelector(".info-photo img");
             photoImg.src = e.target.result;
+            localStorage.setItem("infoPhoto", photoImg.src);
         }
     }
 }

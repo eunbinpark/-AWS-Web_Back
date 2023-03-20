@@ -12,11 +12,11 @@ class ModalEvent {
         modalCancelButton.onclick = () => {
             ModalService.getInstance().closeModal();
         }
-    }
+    }    
 
     addEventRemoveOkClick(removeIndex) {
-        const modalOklButton = document.querySelector(".modal-ok-button");
-        modalOklButton.onclick = () => {
+        const modalOkButton = document.querySelector(".modal-ok-button");
+        modalOkButton.onclick = () => {
             TodoService.getInstance().todoList.splice(removeIndex, 1);
             TodoService.getInstance().updateLocalStorage();
             ModalService.getInstance().closeModal();
@@ -24,14 +24,15 @@ class ModalEvent {
     }
 
     addEventModifyOkClick(modifyIndex) {
-        const modalOklButton = document.querySelector(".modal-ok-button");
-        modalOklButton.onclick = () => {
-            const todoModifyInput = document.querySelector(".todo-modify-input")
+        const modalOkButton = document.querySelector(".modal-ok-button");
+        modalOkButton.onclick = () => {
+            const todoModifyInput = document.querySelector(".todo-modify-input");
             TodoService.getInstance().todoList[modifyIndex].todoContent = todoModifyInput.value;
             TodoService.getInstance().updateLocalStorage();
             ModalService.getInstance().closeModal();
         }
     }
+
 }
 
 class ModalService {
@@ -46,12 +47,12 @@ class ModalService {
     showModal() {
         const modalContainer = document.querySelector(".modal-container");
         modalContainer.classList.remove("modal-hidden");
-    }    
+    }
 
     closeModal() {
         const modalContainer = document.querySelector(".modal-container");
         modalContainer.classList.add("modal-hidden");
-    }    
+    }
 
     showRemoveModal(removeIndex) {
         const modalSection = document.querySelector(".modal-section");
@@ -66,14 +67,15 @@ class ModalService {
                 <button type="button" class="modal-ok-button">확인</button>
                 <button type="button" class="modal-cancel-button">취소</button>
             </div>
-            `;
-            ModalEvent.getInstance().addEventRemoveOkClick(removeIndex);
-            ModalEvent.getInstance().addEventCancelClick();
-            this.showModal();
+        `;
+        ModalEvent.getInstance().addEventRemoveOkClick(removeIndex);
+        ModalEvent.getInstance().addEventCancelClick();
+        this.showModal();
     }
 
     showModifyModal(modifyIndex) {
         const todoObj = TodoService.getInstance().todoList[modifyIndex];
+
         const modalSection = document.querySelector(".modal-section");
         modalSection.innerHTML = `
             <div class="modal-header">
@@ -87,9 +89,9 @@ class ModalService {
                 <button type="button" class="modal-ok-button">확인</button>
                 <button type="button" class="modal-cancel-button">취소</button>
             </div>
-            `;
-            ModalEvent.getInstance().addEventModifyOkClick(modifyIndex);
-            ModalEvent.getInstance().addEventCancelClick();
-            this.showModal();
+        `;
+        ModalEvent.getInstance().addEventModifyOkClick(modifyIndex);
+        ModalEvent.getInstance().addEventCancelClick();
+        this.showModal();
     }
 }

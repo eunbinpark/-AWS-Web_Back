@@ -14,18 +14,18 @@ class AsideEvent {
             if(menuAside.classList.contains("hidden-menu")) {
                 menuAside.classList.remove("hidden-menu");
                 menuButton.textContent = "◀";
-            } else {
-                menuButton.textContent = "▶";
+            }else {
                 menuAside.classList.add("hidden-menu");
+                menuButton.textContent = "▶";
             }
         }
     }
 
     addEventMainChange() {
         const menuItems = document.querySelectorAll(".menu-items");
-        menuItems.forEach((menuItems, index) => {
-            menuItems.onclick = () => {
-                const mainContainers = document.querySelectorAll(".main-container")
+        menuItems.forEach((menuItem, index) => {
+            menuItem.onclick = () => {
+                const mainContainers = document.querySelectorAll(".main-container");
                 const menuAside = document.querySelector(".menu-aside");
                 mainContainers.forEach(mainContainer => {
                     mainContainer.classList.add("main-hidden");

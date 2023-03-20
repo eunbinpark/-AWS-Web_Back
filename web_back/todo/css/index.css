@@ -101,10 +101,9 @@
     font-size: 11px;
 }
 
-
 .content-main {
     padding: 10px;
-    height: 70%;
+    height: 65%;
     word-break: keep-all;
     line-height: 25px;
 }
@@ -113,7 +112,7 @@
     justify-content: flex-end;
     padding: 10px;
     padding-top: 0;
-    height: 10%;
+    height: 15%;
 }
 
 .modify-button, .remove-button {
@@ -156,7 +155,7 @@
     padding: 5px;
     background-color: #121212bb;
     color: white;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .info-photo:hover .change-nav {
@@ -206,10 +205,6 @@
     background-color: #f0f0f0;
 }
 
-.info-input:disabled {
-    background-color: white;
-}
-
 .introduce-input {
     border-bottom: 1px solid #dbdbdb;
     width: 100%;
@@ -218,6 +213,7 @@
     background-color: #f0f0f0;
 }
 
-.info-input:disabled, .introduce-input:disabled {
+.info-input:disabled, 
+.introduce-input:disabled {
     background-color: white;
 }

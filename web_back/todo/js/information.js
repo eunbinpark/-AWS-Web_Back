@@ -7,8 +7,6 @@ class InformationEvent {
         return this.#instance;
     }
 
-    userInfo = {};
-
     addEventPhotoChangeClick() {
         const infoPhoto = document.querySelector(".info-photo");
         infoPhoto.onclick = () => {
@@ -46,13 +44,15 @@ class InformationEvent {
             aboutMeSaveButton.classList.add("button-hidden");
 
             const infoInputContainers = document.querySelectorAll(".info-input-container");
-            const userInfo = InformationService.getInstance().userInfo;
             
+            const userInfo = InformationService.getInstance().userInfo;
+
             infoInputContainers.forEach(infoInputContainer => {
                 const infoInput = infoInputContainer.querySelector(".info-input");
                 userInfo[infoInput.id] = infoInput.value;
                 infoInput.disabled = true;
             });
+
             localStorage.setItem("userInfo", JSON.stringify(userInfo));
         }
     }
@@ -63,7 +63,6 @@ class InformationEvent {
             const introduceSaveButton = document.querySelector(".s-introduce");
             introduceSaveButton.classList.remove("button-hidden");
             introduceModifyButton.classList.add("button-hidden");
-            
             const introduceInput = document.querySelector(".introduce-input");
             introduceInput.disabled = false;
         }
@@ -75,7 +74,6 @@ class InformationEvent {
             const introduceModifyButton = document.querySelector(".m-introduce");
             introduceModifyButton.classList.remove("button-hidden");
             introduceSaveButton.classList.add("button-hidden");
-
             const introduceInput = document.querySelector(".introduce-input");
             introduceInput.disabled = true;
 
@@ -96,28 +94,44 @@ class InformationService {
         return this.#instance;
     }
 
+    userInfo = {};
+
     loadInfo() {
-        this.loadInfoPhoto(); 
+        this.loadInfoPhoto();
+        this.loadInfoUser();
     }
 
     loadInfoPhoto() {
-        const infoPhotoImg = document.querySelector(".info-photo img")
+        const infoPhotoImg = document.querySelector(".info-photo img");
         const infoPhoto = localStorage.getItem("infoPhoto");
-        if(localStorage.getItem("infoPhoto") == null) {
+        if(infoPhoto == null) {
             infoPhotoImg.src = "./images/noimage.jpg";
-        } else {
+        }else {
             infoPhotoImg.src = infoPhoto;
         }
     }
 
     loadInfoUser() {
         this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
         if(this.userInfo == null) {
+            this.userInfo = {};
             return;
         }
         Object.keys(this.userInfo).forEach(key => {
-            
-        })
+            const infoInput = document.querySelectorAll(".info-input");
+            infoInput.forEach(input => {
+                if(input.id == key) {
+                    input.value = this.userInfo[key];
+                }
+            })
+        });
+
+        if(typeof this.userInfo.introduce == "undefined"){
+            return;
+        }
+        const introduceInput = document.querySelector(".introduce-input");
+        introduceInput.value = this.userInfo.introduce;
     }
 }
 
@@ -134,17 +148,17 @@ class FileService {
         const photoForm = document.querySelector(".photo-form");
         const formData = new FormData(photoForm);
         const fileValue = formData.get("file");
-        let changeFlag = true;
 
         if(fileValue.size == 0) {
             return;
         }
-        this.showPreview(fileValue)
+
+        this.showPreview(fileValue);
     }
 
     showPreview(fileValue) {
         const fileReader = new FileReader();
-        
+
         fileReader.readAsDataURL(fileValue);
 
         fileReader.onload = (e) => {
